@@ -1,0 +1,17 @@
+extends layouts/base.pug
+
+block content 
+    if email
+        form.login-form(action="" method="POST")  
+            input(type="email" placeholder="E-mail" name="email" required value=`${email}`)     
+            input(type="password" placeholder="Password" name="password" required)     
+            input(type="submit" value="Login")
+    else 
+        form.login-form(action="" method="POST")  
+            input(type="email" placeholder="E-mail" name="email" required)     
+            input(type="password" placeholder="Password" name="password" required)     
+            input(type="submit" value="Login")
+
+    if errorMessage
+        script.         
+            alert(`#{errorMessage}`)

@@ -1,0 +1,23 @@
+extends layouts/base.pug
+
+block content 
+    if user
+        form.join-form(action="" method="POST")        
+            input(type="email" placeholder="E-mail" name="email" required value=`${user.email}`)                    
+            input(type="password" placeholder="Password" name="password" required) 
+            input(type="password" placeholder="Cofirm Password" name="password2" required ) 
+            input(type="text" placeholder="ID / Nick name" name="userid" required value=`${user.userid}`)
+            input(type="submit" value="Join")
+    
+    else
+        form.join-form(action="" method="POST")        
+            input(type="email" placeholder="E-mail" name="email" required)         
+            input(type="password" placeholder="Password" name="password" required) 
+            input(type="password" placeholder="Cofirm Password" name="password2" required) 
+            input(type="text" placeholder="ID / Nick name" name="userid" required)                        
+            input(type="submit" value="Join")
+        
+
+    if errorMessage
+        script.         
+            alert(`#{errorMessage}`)

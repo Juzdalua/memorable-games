@@ -1,0 +1,39 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Memorable Games #{pageTitle}
+        style 
+            include ../styles/style.css
+    body 
+        nav.nav-topbar 
+            ul.nav-topbar__main 
+                li
+                    a(href="/") Home
+                if !loginUser     
+                    li
+                        a(href="/login") Login 
+                    li
+                        a(href="/join") Join
+                else 
+                    li
+                        a(href="/logout") LogOut
+
+        nav.nav-sidebar
+            ul.nav-sidebar__main 
+                li 
+                    a(href="#") Notice
+                li 
+                    a(href="#") Steam
+                li 
+                    a(href="#") Online
+                li 
+                    a(href="#") My games
+        
+        main
+            block content     
+
+    script 
+        block script
