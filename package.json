@@ -1,0 +1,28 @@
+{
+  "name": "memorable-movie",
+  "version": "1.0.0",
+  "description": "Portfolio to prove",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Juzdalua/memorable-movie.git"
+  },
+  "author": "Juzdalua<bearwcw@naver.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Juzdalua/memorable-movie/issues"
+  },
+  "homepage": "https://github.com/Juzdalua/memorable-movie#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/node": "^7.15.4",
+    "@babel/core": "^7.15.5",
+    "@babel/preset-env": "^7.15.6",
+    "nodemon": "^2.0.12"
+  }
+}
