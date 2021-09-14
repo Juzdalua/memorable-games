@@ -1,6 +1,10 @@
 extends layouts/base.pug
 
 block content 
+    div.main__header
+        span 환영합니다😄      
+        span 
+
     if user
         form.join-form(action="" method="POST")        
             input(type="email" placeholder="E-mail" name="email" required value=`${user.email}`)                    

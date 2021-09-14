@@ -19,20 +19,20 @@ html(lang="en")
                         a(href="/join") Join
                 else
                     li 
-                        a(href="#") #{loggedInUser.userid} 
+                        a(href=`/user/${loggedInUser.userid}`) #{loggedInUser.userid} 
                     li
                         a(href="/logout") Logout
 
         nav.nav-sidebar
             ul.nav-sidebar__main 
                 li 
-                    a(href="#") Notice
+                    a(href="/notice") Notice
                 li 
-                    a(href="#") Steam
+                    a(href="/steam") Steam
                 li 
-                    a(href="#") Online
+                    a(href="/online") Online
                 li 
-                    a(href="#") My games
+                    a(href="/mygames") My games
         
         main
             block content     

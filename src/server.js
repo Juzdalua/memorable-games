@@ -1,6 +1,6 @@
 import express from "express";
 import rootRouter from "./routers/rootRouter";
-import userRouter from "./routers/userRouter";
+import noticeRouter from "./routers/noticeRouter";
 import bodyParser from "body-parser";
 import "./db";
 import session from "express-session";
@@ -26,6 +26,12 @@ app.use(session({
 
 app.use(localsMiddlewares);
 app.use('/', rootRouter);
+app.use('/notice', noticeRouter);
+
+//404 Uncorrect URL
+app.use( (req, res, next)=>{
+    res.status(404).render("404", {pageTitle:" | 404"});
+});
 
 app.listen(PORT, ()=>{
     console.log(`😃 Conneted server, PORT: ${PORT}`);

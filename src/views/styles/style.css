@@ -12,6 +12,7 @@ body{
     background-color: rgba(0, 0, 0, 0.01);
 }
 
+/* nav bar */
 a{
     color: black;
     text-decoration: none;
@@ -35,7 +36,7 @@ a:visited{
 }
 
 .nav-sidebar{
-    top:100px;
+    top:300px;
     position: fixed;
     font-size: 60px;
     font-weight: bold;     
@@ -49,21 +50,37 @@ a:visited{
     align-items: center;    
 }
 
+/* main */
 main{    
-    width: 40%;
+    width: 70%;
     height:100%;    
-    margin-left: 30%;
+    margin-left: 25%;
     margin-top: 10%;    
-    padding: 200px;
-    
+    padding: 10px;
+    background-color: beige;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
+.main__header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+/* login, join */
 .join-form,
 .login-form{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;    
+    justify-content: flex-start;
+    align-items: center;  
+    margin-top: 100px; 
 }
 .join-form input,
 .login-form input{
@@ -79,4 +96,144 @@ main{
     border-radius: 10px;
     cursor: pointer;
     width: 100px;
+}
+
+.login__tojoin, 
+.login__tojoin a{
+    font-size: 20px;
+    margin-top: 100px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+/* notice */
+.notice-maseter__write{
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    
+}
+.notice-maseter__write-btn{
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.notice-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width:100%;
+    font-size: 15px;    
+    margin-top: 10px;
+}
+.notice-list__header{
+    font-weight: bold;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.notice-list__header,
+.notice-list__list{
+    display: flex;
+    justify-content: space-between;
+    width:100%
+}
+.notice-list__main{
+    display: flex;
+    flex-direction: column;   
+    align-items: center;
+    width: 100%;    
+}
+
+.notice-list__header-num{
+    width:10%;
+    padding:5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.notice-list__header-title{
+    width:40%;
+    padding:5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.notice-list__header-owner{
+    width:20%;
+    padding:5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.notice-list__header-createAt{
+    width:20%;
+    padding:5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.notice-list__header-views{
+    width:10%;
+    padding:5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* notice 클릭. :id 연결 */
+.notice__main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+#notice-list__header-id:hover{
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.notice__main-header{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding:20px;
+    font-size: 15px;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.notice__main-header__menu{
+    display: flex;
+    justify-content: space-between;
+    padding:20px;
+    font-size: 15px;
+}
+.notice__main-content{
+    margin-top: 100px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.notice__main-content__title{
+    font-size: 30px;
+    font-weight: bold;
+}
+.notice__main-content__main{
+    margin-top: 200px;
+    font-size: 17px;
+}
+
+/* notice 작성 */
+.notice-form{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+.notice-form textarea{
+    margin: 20px 0px;
+}
+.notice-form input[type="submit"]{
+    width: 100px;
+    cursor: pointer;
+    padding:10px;
+    margin-left: 80%;
+    border-radius: 5px;
+    border: none;
 }

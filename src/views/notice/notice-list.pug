@@ -1,0 +1,24 @@
+extends ../layouts/base.pug
+include ../mixins/notice-mixin.pug
+
+block content 
+    div.main__header
+        span 홈페이지 사용 규칙
+
+    if loggedIn && loggedInUser.grade === 0
+        div.notice-maseter__write
+            div.notice-maseter__write-btn
+                a(href="/notice/write") 글쓰기
+
+    div.notice-list
+        div.notice-list__header
+            span.notice-list__header-num 번호
+            span.notice-list__header-title 제목
+            span.notice-list__header-owner 글쓴이
+            span.notice-list__header-createAt 등록일
+            span.notice-list__header-views 조회
+        div.notice-list__main
+            each notice in notices
+                +notice(notice)
+            else
+                span 작성된 글이 없습니다.

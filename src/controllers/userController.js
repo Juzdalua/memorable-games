@@ -15,21 +15,22 @@ export const postJoin = async (req, res) => {
 
     //password validation
     if(password !== password2)
-        res.status(400).render("join", {pageTitle:" | Join,", errorMessage : "Uncorrect Password", user})
+        res.status(400).render("join", {pageTitle:" | Join", errorMessage : "Uncorrect Password", user})
     
     //userid, email validation
     const existUserEmail =  await User.findOne({email});
     if(existUserEmail)
-        return res.status(400).render("join", {pageTitle:" | Join,", errorMessage : "E-mail is already exist."});
+        return res.status(400).render("join", {pageTitle:" | Join", errorMessage : "E-mail is already exist."});
     
     const existUserid =  await User.findOne({userid});
     if(existUserid)    
-        return res.status(400).render("join", {pageTitle:" | Join,", errorMessage : "ID is already exist."});
+        return res.status(400).render("join", {pageTitle:" | Join", errorMessage : "ID is already exist."});
    
     await User.create({
         userid, password, password2, email
     });
-    return res.render("login", {pageTitle:" | Login"});
+
+    return res.redirect("login");
 }
 
 // Login

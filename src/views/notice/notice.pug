@@ -1,0 +1,23 @@
+extends ../layouts/base.pug
+
+block content 
+    div.notice__main 
+        div.notice__main-header
+            span=notice.owner.userid 
+            span=String(notice.createAt).substr(4,20)
+            span 조회: #{notice.views}
+        div.notice__main-header__menu
+            span [공지]
+            div
+                if loggedInUser._id === String(notice.owner._id)
+                    a(href=`/notice/${notice._id}/modify`) 수정 
+                    span | 
+                    a(href=`/notice/${notice._id}/delete`) 삭제                
+                    span | 
+                a(href="/notice") 목록 | 
+                span 댓글()
+        div.notice__main-content
+            span.notice__main-content__title=notice.title 
+            span.notice__main-content__main=notice.description
+        div.notice__main-comment
+    

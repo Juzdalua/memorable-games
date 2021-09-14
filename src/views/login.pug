@@ -1,6 +1,10 @@
 extends layouts/base.pug
 
 block content 
+    div.main__header
+        span 글을 작성하려면 계정이 필요해요.
+        span 이메일만으로 가입해보세요.
+
     if email
         form.login-form(action="" method="POST")  
             input(type="email" placeholder="E-mail" name="email" required value=`${email}`)     
@@ -11,6 +15,9 @@ block content
             input(type="email" placeholder="E-mail" name="email" required)     
             input(type="password" placeholder="Password" name="password" required)     
             input(type="submit" value="Login")
+
+    h1.login__tojoin 계정이 없으시다면, <br>&rarr; 
+        a(href="/join") 회원가입하기
 
     if errorMessage
         script.         
