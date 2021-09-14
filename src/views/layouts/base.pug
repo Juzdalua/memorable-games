@@ -12,14 +12,16 @@ html(lang="en")
             ul.nav-topbar__main 
                 li
                     a(href="/") Home
-                if !loginUser     
+                if !loggedIn     
                     li
                         a(href="/login") Login 
                     li
                         a(href="/join") Join
-                else 
+                else
+                    li 
+                        a(href="#") #{loggedInUser.userid} 
                     li
-                        a(href="/logout") LogOut
+                        a(href="/logout") Logout
 
         nav.nav-sidebar
             ul.nav-sidebar__main 
