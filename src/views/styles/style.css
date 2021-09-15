@@ -53,7 +53,6 @@ a:visited{
 /* main */
 main{    
     width: 70%;
-    height:100%;    
     margin-left: 25%;
     margin-top: 10%;    
     padding: 10px;
@@ -289,4 +288,34 @@ main{
 
 .steam-form__main input{
     margin-left: 20px;
+}
+
+.steam__main-rating {
+    display: flex;    
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+.steam__main-rating__like,
+.steam__main-rating__dislike{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 10px 30px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    margin: 10px;
+    cursor: pointer;  
+}
+.steam__main-rating-like,
+.steam__main-rating-dislike{
+    font-size: 50px;      
+}
+
+.steam__main-content__video{
+    width: 1280px;
+    height: 720px;
+    margin-top: 100px;
+    margin-bottom: -100px;
 }

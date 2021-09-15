@@ -7,7 +7,38 @@ block content
             span=String(steam.createAt).substr(4,20)
             span 조회: #{steam.views}
         div.notice__main-header__menu
-            span [공지]
+            div
+                case steam.genre
+                    when 0
+                        span [액션]
+                    when 1
+                        span [RPG]
+                    when 2
+                        span [퍼즐]
+                    when 3
+                        span [어드벤쳐]
+                    when 4
+                        span [시뮬레이션]
+                    when 5
+                        span [음악]
+                    when 6
+                        span [스포츠]
+                    when 7
+                        span [아케이드]            
+                span  | 
+                case steam.age
+                    when 0
+                        span [전체이용가]
+                    when 1
+                        span [12세이용가]
+                    when 2
+                        span [15세이용가]
+                    when 3
+                        span [청소년이용불가]
+                    when 4
+                        span [시험용]
+                    when 5
+                        span [등급면제]
             div
                 if loggedInUser._id === String(steam.owner._id)
                     a(href=`/steam/${steam._id}/modify`) 수정 
@@ -17,9 +48,15 @@ block content
                 a(href="/steam") 목록 
                 span | 댓글 ()
         div.notice__main-content
-            span.notice__main-content__title=steam.title 
-            span genre, age, rating
-            span video
+            span.notice__main-content__title=steam.title             
+            video.steam__main-content__video(controls src=`/${steam.fileUrl}`)
             span.notice__main-content__main=steam.description
+            div.steam__main-rating
+                div.steam__main-rating__like
+                    span.steam__main-rating-like 👍
+                    span.steam__main-rating-rate=steam.rating
+                iv.steam__main-rating__dislike
+                    span.steam__main-rating-dislike 👎
+                    span.steam__main-rating-rate=steam.rating
         div.notice__main-comment
     
