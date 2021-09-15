@@ -53,10 +53,14 @@ block content
             span.notice__main-content__main=steam.description
             div.steam__main-rating
                 div.steam__main-rating__like
-                    span.steam__main-rating-like 👍
-                    span.steam__main-rating-rate=steam.rating
+                    span.steam__main-rating-like(OnClick=`location.href="/steam/${steam._id}/like"`) 👍
+                    span.steam__main-rating-rate=steam.like.like
                 iv.steam__main-rating__dislike
-                    span.steam__main-rating-dislike 👎
-                    span.steam__main-rating-rate=steam.rating
+                    span.steam__main-rating-dislike(OnClick=`location.href="/steam/${steam._id}/dislike"`) 👎
+                    span.steam__main-rating-rate=steam.like.dislike
         div.notice__main-comment
+    
+    if errorMessage
+        script.         
+            alert(`#{errorMessage}`)
     
