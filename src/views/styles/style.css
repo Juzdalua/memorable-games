@@ -229,11 +229,64 @@ main{
 .notice-form textarea{
     margin: 20px 0px;
 }
-.notice-form input[type="submit"]{
+.notice-form input[type="submit"],
+.steam-form input[type="submit"]{
     width: 100px;
     cursor: pointer;
     padding:10px;
     margin-left: 80%;
     border-radius: 5px;
     border: none;
+}
+
+/* steam */
+.steam-container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 30px;
+}
+.steam-item{
+    margin:50px;
+    cursor: pointer;
+}
+.steam-item__thumbnail {
+    width: 250px;
+    height: 150px;
+    background-color: tomato;
+}
+.steam-item__content {
+    display: flex;
+    flex-direction: column;
+}
+.steam-item__content-owner,
+.steam-item__content-metas{
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 15px;
+}
+
+.steam-form,
+.steam-form__header,
+.steam-form__main{
+    display: flex;
+    flex-direction: column;
+}
+
+.steam-form__header-age{
+    display: flex;    
+}
+.steam-form__header-age label{
+    margin-right: 20px;
+}
+
+.steam-form__header-title,
+.steam-form__main textarea{
+    margin:10px 0;
+}
+.steam-form__header-title input{
+    width:70%;
+    padding: 10px;
+}
+
+.steam-form__main input{
+    margin-left: 20px;
 }

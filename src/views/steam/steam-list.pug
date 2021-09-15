@@ -1,0 +1,17 @@
+extends ../layouts/base.pug
+include ../mixins/steam-mixin.pug
+
+block content 
+    div.main__header
+        span 기억에 남는 스팀게임
+
+    if loggedIn && loggedInUser.grade === 0
+        div.notice-maseter__write
+            div.notice-maseter__write-btn
+                a(href="/steam/write") 글쓰기
+
+    div.steam-container
+        each steam in steams
+            +steam(steam)
+        else 
+            span no steam games..

@@ -1,0 +1,9 @@
+mixin steam(steam)
+
+    div.steam-item(OnClick=`location.href="/steam/${steam._id}"`)
+        div.steam-item__thumbnail 
+            div 300x200
+        div.steam-item__content 
+            span.steam-item__content-title=steam.title 
+            span.steam-item__content-owner=steam.owner.userid 
+            span.steam-item__content-metas  #{steam.views}회 | #{String(steam.createAt).substr(4,20)}
