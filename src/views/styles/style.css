@@ -319,3 +319,52 @@ main{
     margin-top: 100px;
     margin-bottom: -100px;
 }
+
+/* comment */
+.steam__main-comment{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.steam__main-comment__count,
+.steam__main-comment__form-container{
+    display: flex;    
+    align-items: center;
+}
+.steam__main-comment__item{
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+    padding: 20px;
+}
+
+.steam__main-comment__item-userid{
+    font-weight: bold;
+}
+.steam__main-comment__item-createAt{
+    font-size: 16px;
+    opacity: 0.8;
+    margin-left: 10px;
+}
+
+.steam__main-comment__form{
+    background-color: rgba(0, 0, 0, 0.1);
+    padding:20px;    
+    width: 95%;
+    margin: 0 auto;
+}
+.steam__main-comment__form-container__text{
+    width: 100%;
+    margin-right: 20px;    
+}
+.steam__main-comment__form-container__text > textarea{
+    width:100%;    
+}
+.steam__main-comment__form-container__submit{
+    width: 10%;
+}
+.steam__main-comment__form-container__submit > input{
+    padding: 15px;
+}

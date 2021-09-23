@@ -9,6 +9,7 @@ const UserSchema = new Schema({
     notice:[ {type:mongoose.Schema.Types.ObjectId, ref:"Notice"} ],
     steam:[ {type:mongoose.Schema.Types.ObjectId, ref:"Steam"} ],
     like:[ {type:mongoose.Schema.Types.ObjectId, ref:"Like"} ],
+    comments: [{type:mongoose.Schema.Types.ObjectId, ref:"Comment"}],
 });
 
 

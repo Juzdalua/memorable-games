@@ -129,3 +129,18 @@ export const getSteamDislike = async (req, res) => {
 
     res.redirect('back');
 };
+
+//댓글달기
+export const createComment = async (req, res) => {
+    const {params:{id},
+    body:{comment}} = req;
+    const steam = await Steam.findById(id).populate("owner").populate("like");
+    
+    //login validation
+    if(!req.session.user)
+        return res.render("steam/steam", {pageTitle:"Steam", errorMessage:"로그인 먼저 하세요.", steam});
+
+    
+    
+    return res.end();
+};

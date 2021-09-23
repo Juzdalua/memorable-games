@@ -2,6 +2,7 @@ import express from "express";
 import rootRouter from "./routers/rootRouter";
 import noticeRouter from "./routers/noticeRouter";
 import steamRouter from "./routers/steamRouter";
+import apiRouter from "./routers/apiRouter";
 import bodyParser from "body-parser";
 import "./db";
 import session from "express-session";
@@ -30,6 +31,7 @@ app.use("/uploads", express.static("uploads"));
 app.use('/', rootRouter);
 app.use('/notice', noticeRouter);
 app.use('/steam', steamRouter);
+app.use('/api', apiRouter);
 
 //404 Uncorrect URL
 app.use( (req, res, next)=>{
