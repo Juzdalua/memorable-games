@@ -368,3 +368,15 @@ main{
 .steam__main-comment__form-container__submit > input{
     padding: 15px;
 }
+
+/* 댓글 삭제 */
+.steam__main-comment__item-mixin{
+    display: flex;
+    align-items: center;
+}
+.steam__main-comment__item-delete{
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    background: none;
+    font-size: 10px;    
+}

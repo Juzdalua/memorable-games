@@ -1,4 +1,5 @@
 extends ../layouts/base.pug
+include ../mixins/comment-mixin.pug
 
 block content 
     div.notice__main 
@@ -64,11 +65,10 @@ block content
             i.far.fa-comment
             span.steam__main-comment__count-comments 댓글(0)
         div.steam__main-comment__item
-            div
-                span.steam__main-comment__item-userid ID 
-                span.steam__main-comment__item-createAt createdAt
-            div
-                span.steam__main-comment__item-text text
+            each comment in comments 
+                +comment(comment)
+            else 
+                span 아직 작성된 댓글이 없습니다. 
         div.steam__main-comment__form
             form.steam__main-comment__form-container(action=`/api/steams/${steam._id}/comment` method="POST")
                 div.steam__main-comment__form-container__text

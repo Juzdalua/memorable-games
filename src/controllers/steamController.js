@@ -1,6 +1,8 @@
 import Like from "../model/Like";
 import Steam from "../model/Steam";
 import User from "../model/User";
+import Comment from "../model/Comment";
+
 
 export const getSteamList = async (req, res) => {
     const steams = await Steam.find({}).sort({createAt:"desc"}).populate("owner");
@@ -44,7 +46,9 @@ export const getSteam = async (req,res) => {
     steam.views++;
     steam.save();
 
-    res.render("steam/steam", {pageTitle:"Steam", steam});
+    const comments = await Comment.find({game:id}).sort({createdAt:"desc"}).populate("owner");
+    
+    return res.render("steam/steam", {pageTitle:"Steam", steam, comments});
 };
 
 // Like & Dislike
@@ -132,15 +136,62 @@ export const getSteamDislike = async (req, res) => {
 
 //댓글달기
 export const createComment = async (req, res) => {
-    const {params:{id},
-    body:{comment}} = req;
+    const {
+        params:{id},
+        body:{comment}
+    } = req;
     const steam = await Steam.findById(id).populate("owner").populate("like");
+    const loginUser = await User.findById(req.session.user._id);
     
     //login validation
     if(!req.session.user)
         return res.render("steam/steam", {pageTitle:"Steam", errorMessage:"로그인 먼저 하세요.", steam});
 
+    const newComment = await Comment.create({
+        comment, 
+        owner: loginUser,
+        game:id
+    });
+
+    const comments = await Comment.find({game:id}).sort({createdAt:"desc"}).populate("owner");
     
+    steam.comments.push(newComment);
+    steam.save();
     
-    return res.end();
+    loginUser.comments.push(newComment);
+    loginUser.save();
+
+    return res.render("steam/steam", {pageTitle:"Steam", steam, comments});
+};
+
+export const deleteComment = async (req, res) => {
+    const loginUser = req.session.user;    
+    //login validation
+    if(!loginUser)
+        return res.render("steam/steam", {pageTitle:"Steam", errorMessage:"로그인 먼저 하세요.", steam});
+
+    const commentId = req.params.id;
+    const {steam_id} = req.body;
+    
+    const comment = await Comment.findById(commentId).populate("owner");
+    
+    if(!comment)
+        return res.redirect("back");
+
+    const steam = await Steam.findById(steam_id).populate("comments");
+    const user = await User.findById(comment.owner._id).populate("comments");
+    
+    //user validation
+    if(String(user._id) !== String(loginUser._id) )
+        return res.status(404).render("404");
+    
+    await Comment.findByIdAndDelete(commentId);
+    steam.comments = steam.comments.filter(x => String(x._id) != String(commentId));
+    steam.save();
+    user.comments = user.comments.filter(x => String(x._id) != String(commentId));
+    user.save();
+
+    const comments = await Comment.find({game:steam_id}).sort({createdAt:"desc"}).populate("owner");
+    
+    return res.render("steam/steam", {pageTitle:"Steam", steam, comments});
 };
