@@ -2,6 +2,7 @@ import Like from "../model/Like";
 import Game from "../model/Game";
 import User from "../model/User";
 import Comment from "../model/Comment";
+import ffmpeg from "fluent-ffmpeg";
 
 
 export const getGameList = async (req, res) => {
@@ -17,11 +18,11 @@ export const getGameWrite = (req, res) => {
 };
 export const postGameWrite = async (req, res) => {
     const {title, description,age, genre} = req.body;
-
+               
     const game = await Game.create({
         title, description,age, genre,
         owner: req.session.user._id,
-        fileUrl: req.file.path        
+        fileUrl: req.file.path,        
     });    
     const user = await User.findById(req.session.user._id);
     user.game.push(game._id);
@@ -34,7 +35,30 @@ export const postGameWrite = async (req, res) => {
     game.like = like._id;
     game.save();
 
-    return res.redirect("/games");
+    //thumbnail 만들기
+    let thumbnailUrl = "";
+    ffmpeg(req.file.path)
+    .on('filenames', function(filenames) {
+        // console.log('Will generate ' + filenames.join(', '));        
+        thumbnailUrl = `uploads/thumbnails/${filenames[0]}`        
+    })
+    .on('end', function() {
+        //console.log('Screenshots taken');
+        game.thumbnailUrl = thumbnailUrl;
+        game.save();
+    }).on("error", function(error){
+        console.log(error);
+        return res.status(404).render("404");
+    })
+    .screenshots({
+        count:1,
+        filename: "thumbnail-%b.png",
+        folder: `uploads/thumbnails`,
+        size: "250x150",             
+    });    
+    const comments="";
+    //return res.redirect("/games");
+    return res.render("games/games", {pageTitle:"Game", game, comments});
 };
 
 //게시물 클릭

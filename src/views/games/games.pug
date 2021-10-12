@@ -47,7 +47,7 @@ block content
                     a(href=`/games/${game._id}/delete`) 삭제                
                     span | 
                 a(href="/games") 목록 
-                span | 댓글 ()
+                span | 댓글(#{game.comments.length})
         div.notice__main-content
             span.notice__main-content__title=game.title             
             video.steam__main-content__video(controls src=`/${game.fileUrl}`)
@@ -63,7 +63,7 @@ block content
     div.steam__main-comment
         div.steam__main-comment__count
             i.far.fa-comment
-            span.steam__main-comment__count-comments 댓글(0)
+            span.steam__main-comment__count-comments 댓글(#{game.comments.length})
         div.steam__main-comment__item
             each comment in comments 
                 +comment(comment)

@@ -2,7 +2,11 @@ mixin game(game)
 
     div.steam-item(OnClick=`location.href="/games/${game._id}"`)
         div.steam-item__thumbnail 
-            div 300x200
+            if game.thumbnailUrl
+                div
+                    img(src=`/${game.thumbnailUrl}` width="250px" height="150px")
+            else 
+                div 300x200
         div.steam-item__content 
             span.steam-item__content-title=game.title 
             span.steam-item__content-owner=game.owner.userid 

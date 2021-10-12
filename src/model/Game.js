@@ -10,6 +10,7 @@ const GameSchema = new Schema({
     views: {type:Number, default:0}, 
     rating: {type:Number, default:0},
     fileUrl: {type:String, required:true},
+    thumbnailUrl: {type:String},
     owner: {type:mongoose.Schema.Types.ObjectId, required:true, ref:"User"},
     comments: [{type:mongoose.Schema.Types.ObjectId, ref:"Comment"}],
     like: {type:mongoose.Schema.Types.ObjectId, ref:"Like"}
