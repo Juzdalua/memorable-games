@@ -1,0 +1,9 @@
+mixin game(game)
+
+    div.steam-item(OnClick=`location.href="/games/${game._id}"`)
+        div.steam-item__thumbnail 
+            div 300x200
+        div.steam-item__content 
+            span.steam-item__content-title=game.title 
+            span.steam-item__content-owner=game.owner.userid 
+            span.steam-item__content-metas  #{game.views}회 | #{String(game.createAt).substr(4,20)}

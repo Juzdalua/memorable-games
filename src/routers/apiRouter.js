@@ -1,10 +1,10 @@
 import express from "express";
-import {createComment, deleteComment} from "../controllers/steamController";
+import {createComment, deleteComment} from "../controllers/gameController";
 
 const apiRouter = express.Router();
 
-apiRouter.route("/steams/:id/comment").post(createComment);
-apiRouter.route("/steams/:id/comment/delete").post(deleteComment);
+apiRouter.route("/games/:id/comment").post(createComment);
+apiRouter.route("/games/:id/comment/delete").post(deleteComment);
 
 
 export default apiRouter;

@@ -4,9 +4,9 @@ mixin comment(comment)
         span.steam__main-comment__item-userid=comment.owner.userid
         span.steam__main-comment__item-createAt=String(comment.createAt).substr(4,20)
         if String(comment.owner._id) === String(locals.loggedInUser._id)
-            form(action=`/api/steams/${comment._id}/comment/delete` method="POST") 
+            form(action=`/api/games/${comment._id}/comment/delete` method="POST") 
                 input.steam__main-comment__item-delete(type="submit" value="X")
-                input(type="text" value=`${comment.game}` readonly name="steam_id" style="display:none;")
+                input(type="text" value=`${comment.game}` readonly name="game_id" style="display:none;")
             //- span.steam__main-comment__item-delete(onclick=`location.href="/api/steams/${comment._id}/comment/delete"`) ❌
     div
         span.steam__main-comment__item-text=comment.comment

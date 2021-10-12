@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-const SteamSchema = new Schema({     
+const GameSchema = new Schema({     
     title: {type:String, required:true},
     description: {type:String, required:true},
     createAt:{type:Date, default:Date.now},
@@ -17,5 +17,5 @@ const SteamSchema = new Schema({
 
 
 
-const Steam = mongoose.model("Steam", SteamSchema);
-export default Steam;
+const Game = mongoose.model("Game", GameSchema);
+export default Game;

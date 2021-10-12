@@ -1,64 +1,64 @@
 import Like from "../model/Like";
-import Steam from "../model/Steam";
+import Game from "../model/Game";
 import User from "../model/User";
 import Comment from "../model/Comment";
 
 
-export const getSteamList = async (req, res) => {
-    const steams = await Steam.find({}).sort({createAt:"desc"}).populate("owner");
+export const getGameList = async (req, res) => {
+    const games = await Game.find({}).sort({createAt:"desc"}).populate("owner");
 
-    res.render("steam/steam-list", {pageTitle:" | Steam", steams});
+    res.render("games/games-list", {pageTitle:" | Game", games});
 };
 
 //게시물 작성
-export const getSteamWrite = (req, res) => {
+export const getGameWrite = (req, res) => {
 
-    res.render("steam/steam-write", {pageTitle:" | Steam"});
+    res.render("games/games-write", {pageTitle:" | Game"});
 };
-export const postSteamWrite = async (req, res) => {
+export const postGameWrite = async (req, res) => {
     const {title, description,age, genre} = req.body;
 
-    const steam = await Steam.create({
+    const game = await Game.create({
         title, description,age, genre,
         owner: req.session.user._id,
         fileUrl: req.file.path        
     });    
     const user = await User.findById(req.session.user._id);
-    user.steam.push(steam._id);
+    user.game.push(game._id);
     user.save();
     
     //좋아요&싫어요 달아주기
     const like = await Like.create({
-       game: steam._id 
+       game: game._id 
     });
-    steam.like = like._id;
-    steam.save();
+    game.like = like._id;
+    game.save();
 
-    return res.redirect("/steam");
+    return res.redirect("/games");
 };
 
 //게시물 클릭
-export const getSteam = async (req,res) => {
+export const getGame = async (req,res) => {
     const {id} = req.params;
-    const steam = await Steam.findById(id).populate("owner").populate("like");
+    const game = await Game.findById(id).populate("owner").populate("like");
 
     //조회수 늘려주기
-    steam.views++;
-    steam.save();
+    game.views++;
+    game.save();
 
     const comments = await Comment.find({game:id}).sort({createdAt:"desc"}).populate("owner");
     
-    return res.render("steam/steam", {pageTitle:"Steam", steam, comments});
+    return res.render("games/games", {pageTitle:"Game", game, comments});
 };
 
 // Like & Dislike
-export const getSteamLike = async (req, res) => {
+export const getGameLike = async (req, res) => {
     const {id} = req.params;
-    const steam = await Steam.findById(id).populate("owner").populate("like");
+    const game = await Game.findById(id).populate("owner").populate("like");
 
     //login validation
     if(!req.session.user)
-        return res.render("steam/steam", {pageTitle:"Steam", errorMessage:"로그인 먼저 하세요.", steam});
+        return res.render("games/games", {pageTitle:"Game", errorMessage:"로그인 먼저 하세요.", game});
 
     // like model 찾기
     const like = await Like.findOne({game: id});
@@ -94,13 +94,13 @@ export const getSteamLike = async (req, res) => {
 
     res.redirect('back');
 };
-export const getSteamDislike = async (req, res) => {
+export const getGameDislike = async (req, res) => {
     const {id} = req.params;
-    const steam = await Steam.findById(id).populate("owner").populate("like");
+    const game = await Game.findById(id).populate("owner").populate("like");
 
     //login validation
     if(!req.session.user)
-        return res.render("steam/steam", {pageTitle:"Steam", errorMessage:"로그인 먼저 하세요.", steam});
+        return res.render("games/games", {pageTitle:"Game", errorMessage:"로그인 먼저 하세요.", game});
 
     // like model 찾기
     const like = await Like.findOne({game: id});
@@ -140,12 +140,12 @@ export const createComment = async (req, res) => {
         params:{id},
         body:{comment}
     } = req;
-    const steam = await Steam.findById(id).populate("owner").populate("like");
+    const game = await Game.findById(id).populate("owner").populate("like");
     const loginUser = await User.findById(req.session.user._id);
     
     //login validation
     if(!req.session.user)
-        return res.render("steam/steam", {pageTitle:"Steam", errorMessage:"로그인 먼저 하세요.", steam});
+        return res.render("games/games", {pageTitle:"Game", errorMessage:"로그인 먼저 하세요.", game});
 
     const newComment = await Comment.create({
         comment, 
@@ -155,30 +155,30 @@ export const createComment = async (req, res) => {
 
     const comments = await Comment.find({game:id}).sort({createdAt:"desc"}).populate("owner");
     
-    steam.comments.push(newComment);
-    steam.save();
+    game.comments.push(newComment);
+    game.save();
     
     loginUser.comments.push(newComment);
     loginUser.save();
 
-    return res.render("steam/steam", {pageTitle:"Steam", steam, comments});
+    return res.render("games/games", {pageTitle:"Game", game, comments});
 };
 
 export const deleteComment = async (req, res) => {
     const loginUser = req.session.user;    
     //login validation
     if(!loginUser)
-        return res.render("steam/steam", {pageTitle:"Steam", errorMessage:"로그인 먼저 하세요.", steam});
+        return res.render("games/games", {pageTitle:"Game", errorMessage:"로그인 먼저 하세요.", game});
 
     const commentId = req.params.id;
-    const {steam_id} = req.body;
+    const {game_id} = req.body;
     
     const comment = await Comment.findById(commentId).populate("owner");
     
     if(!comment)
         return res.redirect("back");
 
-    const steam = await Steam.findById(steam_id).populate("comments");
+    const game = await Game.findById(game_id).populate("comments");
     const user = await User.findById(comment.owner._id).populate("comments");
     
     //user validation
@@ -186,12 +186,12 @@ export const deleteComment = async (req, res) => {
         return res.status(404).render("404");
     
     await Comment.findByIdAndDelete(commentId);
-    steam.comments = steam.comments.filter(x => String(x._id) != String(commentId));
-    steam.save();
+    game.comments = game.comments.filter(x => String(x._id) != String(commentId));
+    game.save();
     user.comments = user.comments.filter(x => String(x._id) != String(commentId));
     user.save();
 
-    const comments = await Comment.find({game:steam_id}).sort({createdAt:"desc"}).populate("owner");
+    const comments = await Comment.find({game:game_id}).sort({createdAt:"desc"}).populate("owner");
     
-    return res.render("steam/steam", {pageTitle:"Steam", steam, comments});
+    return res.render("games/games", {pageTitle:"Game", game, comments});
 };

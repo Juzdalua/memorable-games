@@ -1,5 +1,5 @@
 extends ../layouts/base.pug
-include ../mixins/steam-mixin.pug
+include ../mixins/games-mixin.pug
 
 block content 
     div.main__header
@@ -8,10 +8,10 @@ block content
     if loggedIn && loggedInUser.grade === 0
         div.notice-maseter__write
             div.notice-maseter__write-btn
-                a(href="/steam/write") 글쓰기
+                a(href="/games/write") 글쓰기
 
     div.steam-container
-        each steam in steams
-            +steam(steam)
+        each game in games
+            +game(game)
         else 
-            span no steam games..
+            span no games...
