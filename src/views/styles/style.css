@@ -25,11 +25,16 @@ a:visited{
     top:0;    
     right:0;
     position: fixed;
-    height: 20%;
+    height: 10%;
+    background-color: white;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }
 .nav-topbar__main {
     list-style: none;
-    display: flex;   
+    display: flex;    
+       
 }
 .nav-topbar__main li{
     margin-right: 50px;

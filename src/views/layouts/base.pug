@@ -11,26 +11,26 @@ html(lang="en")
         nav.nav-topbar 
             ul.nav-topbar__main 
                 li
-                    a(href="/") Home
+                    a.fas.fa-home(href="/")
                 if !loggedIn     
                     li
-                        a(href="/login") Login 
+                        a(href="/login") 로그인
                     li
-                        a(href="/join") Join
+                        a(href="/join") 회원가입
                 else
                     li 
                         a(href=`/user/${loggedInUser.userid}`) #{loggedInUser.userid} 
                     li
-                        a(href="/logout") Logout
+                        a(href="/logout") 로그아웃
 
         nav.nav-sidebar
             ul.nav-sidebar__main 
                 li 
-                    a(href="/notice") Notice
+                    a(href="/notice") 공지사항
                 li 
-                    a(href="/games") Games
+                    a(href="/games") 게임
                 li 
-                    a(href="/community") Community
+                    a(href="/community") 커뮤니티
         
         main
             block content     
