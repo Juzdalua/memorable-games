@@ -9,6 +9,7 @@ const UserSchema = new Schema({
     notice:[ {type:mongoose.Schema.Types.ObjectId, ref:"Notice"} ],
     game:[ {type:mongoose.Schema.Types.ObjectId, ref:"Game"} ],
     like:[ {type:mongoose.Schema.Types.ObjectId, ref:"Like"} ],
+    dislike:[ {type:mongoose.Schema.Types.ObjectId, ref:"Dislike"} ],
     comments: [{type:mongoose.Schema.Types.ObjectId, ref:"Comment"}],
     community: [{type:mongoose.Schema.Types.ObjectId, ref:"Community"}]
 });

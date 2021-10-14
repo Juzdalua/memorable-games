@@ -13,7 +13,8 @@ const GameSchema = new Schema({
     thumbnailUrl: {type:String},
     owner: {type:mongoose.Schema.Types.ObjectId, required:true, ref:"User"},
     comments: [{type:mongoose.Schema.Types.ObjectId, ref:"Comment"}],
-    like: {type:mongoose.Schema.Types.ObjectId, ref:"Like"}
+    like: {type:mongoose.Schema.Types.ObjectId, ref:"Like"},
+    dislike: {type:mongoose.Schema.Types.ObjectId, ref:"Dislike"}
 });
 
 

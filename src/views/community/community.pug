@@ -9,11 +9,11 @@ block content
             span 조회: #{article.views}        
             div
                 if loggedInUser._id === String(article.owner._id)
-                    a(href=`/articles/${article._id}/modify`) 수정 
+                    a(href=`/community/${article._id}/modify`) 수정 
                     span | 
-                    a(href=`/articles/${article._id}/delete`) 삭제                
+                    a(href=`/community/${article._id}/delete`) 삭제                
                     span | 
-                a(href="/articles") 목록 
+                a(href="/community") 목록 
                 span | 댓글(#{article.comments.length})
         div.notice__main-content
             span.notice__main-content__title=article.title             
@@ -21,11 +21,11 @@ block content
             span.notice__main-content__main=article.description
             div.steam__main-rating
                 div.steam__main-rating__like
-                    span.steam__main-rating-like(OnClick=`location.href="/articles/${article._id}/like"`) 👍
+                    span.steam__main-rating-like(OnClick=`location.href="/community/${article._id}/like"`) 👍
                     span.steam__main-rating-rate=article.like.like
                 iv.steam__main-rating__dislike
-                    span.steam__main-rating-dislike(OnClick=`location.href="/articles/${article._id}/dislike"`) 👎
-                    span.steam__main-rating-rate=article.like.dislike
+                    span.steam__main-rating-dislike(OnClick=`location.href="/community/${article._id}/dislike"`) 👎
+                    span.steam__main-rating-rate=article.dislike.dislike
 
     div.steam__main-comment
         div.steam__main-comment__count
@@ -37,7 +37,7 @@ block content
             else 
                 span 아직 작성된 댓글이 없습니다. 
         div.steam__main-comment__form
-            form.steam__main-comment__form-container(action=`/api/articles/${article._id}/comment` method="POST")
+            form.steam__main-comment__form-container(action=`/api/community/${article._id}/comment` method="POST")
                 div.steam__main-comment__form-container__text
                     textarea(rows="3" name="comment")
                 div.steam__main-comment__form-container__submit

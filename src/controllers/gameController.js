@@ -1,4 +1,5 @@
 import Like from "../model/Like";
+import Dislike from "../model/Dislike";
 import Game from "../model/Game";
 import User from "../model/User";
 import Comment from "../model/Comment";
@@ -33,6 +34,10 @@ export const postGameWrite = async (req, res) => {
        game: game._id 
     });
     game.like = like._id;
+    const dislike = await Dislike.create({
+        game: game._id 
+     });
+     game.dislike = dislike._id;
     game.save();
 
     //thumbnail 만들기
@@ -64,7 +69,7 @@ export const postGameWrite = async (req, res) => {
 //게시물 클릭
 export const getGame = async (req,res) => {
     const {id} = req.params;
-    const game = await Game.findById(id).populate("owner").populate("like");
+    const game = await Game.findById(id).populate("owner").populate("like").populate("dislike");
 
     //조회수 늘려주기
     game.views++;
@@ -78,7 +83,8 @@ export const getGame = async (req,res) => {
 // Like & Dislike
 export const getGameLike = async (req, res) => {
     const {id} = req.params;
-    const game = await Game.findById(id).populate("owner").populate("like");
+    const game = await Game.findById(id).populate("owner").populate("like").populate("dislike");
+    const user = await User.findById(req.session.user._id);
 
     //login validation
     if(!req.session.user)
@@ -88,39 +94,48 @@ export const getGameLike = async (req, res) => {
     const like = await Like.findOne({game: id});
     if(!like)
         return res.status(404).render("404");
-
-    // 좋아요 설정
-    let newlike = 0;
-    let newdislike = like.dislike;
-    if (like.like === 0 && like.dislike === 0){
-        newlike = 1;
-    }
-    else if(like.like === 1 && like.dislike === 0){
-        newlike = 0
-    }
-    else if(like.dislike === 1){
-        newlike = 0;
-        newdislike = 0;
-    }
-    await Like.findByIdAndUpdate(
-        like._id, {like:newlike, dislike:newdislike}
-    );
-
-    //좋아요 유저에 저장
-    const user = await User.findById(req.session.user._id);
-    if(newlike !== 1){          
-        user.like = user.like.filter( x=> String(x) != String(like._id));
-        user.save();
-    } else{
+    const dislike = await Dislike.findOne({game: id});
+    if(!dislike)
+        return res.status(404).render("404");
+    
+    let likeCount = 0;
+    let dislikeCount = 0;
+    for(let i=0; i<like.owner.length; i++){
+        if(String(like.owner[i]) === String(user._id)){
+            likeCount = 1;
+            break;
+        }//if
+    }//for
+    for(let i=0; i<dislike.owner.length; i++){
+        if(String(dislike.owner[i]) === String(user._id)){
+            dislikeCount = 1;
+            break;
+        }//if
+    }//for
+    
+    if(dislikeCount === 0 && likeCount === 0){
+        like.like++;
+        like.owner.push(user._id);
         user.like.push(like._id);
-        user.save();
-    }
+    } else if(likeCount === 1 && dislikeCount === 0){
+        like.like--;
+        like.owner = like.owner.filter( x=> String(x) != String(user._id));
+        user.like = user.like.filter( x=> String(x) != String(like._id));
+    } else if(likeCount === 0 && dislikeCount === 1){
+        dislike.dislike--;
+        dislike.owner = dislike.owner.filter( x=> String(x) != String(user._id));
+        user.dislike = user.dislike.filter( x=> String(x) != String(dislike._id));
+    }//if       
+    like.save();
+    dislike.save();
+    user.save();    
 
     res.redirect('back');
 };
 export const getGameDislike = async (req, res) => {
     const {id} = req.params;
     const game = await Game.findById(id).populate("owner").populate("like");
+    const user = await User.findById(req.session.user._id);
 
     //login validation
     if(!req.session.user)
@@ -130,30 +145,41 @@ export const getGameDislike = async (req, res) => {
     const like = await Like.findOne({game: id});
     if(!like)
         return res.status(404).render("404");
+    const dislike = await Dislike.findOne({game: id});
+        if(!dislike)
+            return res.status(404).render("404");
 
-    // 좋아요 설정
-    let newlike = like.like;
-    let newdislike = 0;
-    if (like.like === 0 && like.dislike === 0){
-        newdislike = 1;
-    }
-    else if(like.like === 0 && like.dislike === 1){
-        newdislike = 0
-    }
-    else if(like.like === 1){
-        newlike = 0;
-        newdislike = 0;
-    }
-    await Like.findByIdAndUpdate(
-        like._id, {like:newlike, dislike:newdislike}
-    );
-
-    //좋아요 없는 유저 빼버리기
-    const user = await User.findById(req.session.user._id);
-    if(newlike !== 1){          
-        user.like = user.like.filter( x=> String(x) != String(like._id));
-        user.save();
-    } 
+    let likeCount = 0;
+    let dislikeCount = 0;
+    for(let i=0; i<like.owner.length; i++){
+        if(String(like.owner[i]) === String(user._id)){
+            likeCount = 1;
+            break;
+        }//if
+    }//for
+    for(let i=0; i<dislike.owner.length; i++){
+        if(String(dislike.owner[i]) === String(user._id)){
+            dislikeCount = 1;
+            break;
+        }//if
+    }//for
+    
+    if(dislikeCount === 0 && likeCount === 0){
+        dislike.dislike++;
+        dislike.owner.push(user._id);
+        user.dislike.push(dislike._id);
+    } else if(likeCount === 1 && dislikeCount === 0){
+        like.like--;
+        like.owner = like.owner.filter( x=> String(x) != String(user._id));
+        user.like = user.like.filter( x=> String(x) != String(like._id));          
+    } else if(likeCount === 0 && dislikeCount === 1){
+        dislike.dislike--;
+        dislike.owner = dislike.owner.filter( x=> String(x) != String(user._id));
+        user.dislike = user.dislike.filter( x=> String(x) != String(dislike._id));        
+    }//if       
+    like.save();
+    dislike.save();
+    user.save();    
 
     res.redirect('back');
 };
