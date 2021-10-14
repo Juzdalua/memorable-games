@@ -1,6 +1,6 @@
 mixin article(article)
 
-    article.article-box 
+    article.article-box(onClick=`location.href="/community/${article._id}"`)
         div.article-box__rating
             span.fas.fa-sort-up.article-box__rating-up
             span.article-box__rating-number 3

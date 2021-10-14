@@ -1,10 +1,11 @@
 import Community from "../model/Community";
 import User from "../model/User";
 import Like from "../model/Like";
+import Comment from "../model/Comment";
 
 export const getCommunityList = async (req, res) => {
     const articles = await Community.find({}).populate("owner");
-    console.log(articles)
+    
     return res.render("community/community-list", {pageTitle: "Community", articles})
 };
 
@@ -34,4 +35,16 @@ export const postCommunityWrite = async(req, res) => {
      const comments = "";
 
     return res.render("community/community-list", {pageTitle:"Community", article, comments});
+};
+
+// 게시물 클릭
+export const getCommunity = async(req, res) => {
+    const articleId = req.params.id;
+
+    const article = await Community.findById(articleId).populate("owner").populate("like");
+    article.views++;
+    article.save();
+    const comments = await Comment.find({community:articleId}).sort({createAt:"desc"}).populate("owner");
+
+    return res.render("community/community", {pageTitle:"Community", article, comments});
 };

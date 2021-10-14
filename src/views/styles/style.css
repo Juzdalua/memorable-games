@@ -319,8 +319,7 @@ main{
 }
 
 .steam__main-content__video{
-    width: 1280px;
-    height: 720px;
+    
     margin-top: 100px;
     margin-bottom: -100px;
 }
@@ -441,6 +440,7 @@ main{
     color: rgba(0, 0, 0, 0.5);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding: 3% 0;
+    cursor: pointer;
 }
 .article-box__rating{
     display: flex;
@@ -467,4 +467,8 @@ main{
     width: 200px;
     height: 100px;    
     margin-right: 5%;
+}
+.article__main-content__img{
+    margin-top: 100px;
+    margin-bottom: -100px;
 }
