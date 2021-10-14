@@ -1,0 +1,11 @@
+extends ../layouts/base.pug
+
+block content
+    
+    form.notice-form(action="" method="POST" enctype="multipart/form-data")
+        span 제목: 
+            input(type="text" placeholder="제목을 입력하세요" required name="title")
+        label(for="image")
+            input(type="file" accept="image/*" name="image" id="image")
+        textarea(name="description", cols="100", rows="20" required) 
+        input(type="submit" value="작성완료")

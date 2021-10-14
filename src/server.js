@@ -2,6 +2,7 @@ import express from "express";
 import rootRouter from "./routers/rootRouter";
 import noticeRouter from "./routers/noticeRouter";
 import gameRouter from "./routers/gameRouter";
+import communityRouter from "./routers/communityRouter";
 import apiRouter from "./routers/apiRouter";
 import bodyParser from "body-parser";
 import "./db";
@@ -31,6 +32,7 @@ app.use("/uploads", express.static("uploads"));
 app.use('/', rootRouter);
 app.use('/notice', noticeRouter);
 app.use('/games', gameRouter);
+app.use('/community', communityRouter);
 app.use('/api', apiRouter);
 
 //404 Uncorrect URL

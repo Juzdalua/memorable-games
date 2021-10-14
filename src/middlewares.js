@@ -15,3 +15,11 @@ export const videoUpload = multer({
         fileSize:10000000,
     }
 });
+
+//image upload part
+export const imageUpload = multer({
+    dest:"uploads/images/",
+    limits: {
+        fileSize:10000000,
+    }
+});

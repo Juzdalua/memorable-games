@@ -10,6 +10,7 @@ const UserSchema = new Schema({
     game:[ {type:mongoose.Schema.Types.ObjectId, ref:"Game"} ],
     like:[ {type:mongoose.Schema.Types.ObjectId, ref:"Like"} ],
     comments: [{type:mongoose.Schema.Types.ObjectId, ref:"Comment"}],
+    community: [{type:mongoose.Schema.Types.ObjectId, ref:"Community"}]
 });
 
 

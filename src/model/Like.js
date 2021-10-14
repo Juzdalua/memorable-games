@@ -5,7 +5,8 @@ const LikeSchema = new Schema({
     like: {type:Number, default:0},
     dislike:{type:Number, default:0},   
     owner: [{type:mongoose.Schema.Types.ObjectId, ref:"User"}],
-    game: {type:mongoose.Schema.Types.ObjectId, required:true, ref:"Game"}
+    game: {type:mongoose.Schema.Types.ObjectId, ref:"Game"},
+    community: {type:mongoose.Schema.Types.ObjectId, ref:"Community"}
 });
 
 
