@@ -191,19 +191,19 @@ export const createComment = async (req, res) => {
         body:{comment}
     } = req;
     const game = await Game.findById(id).populate("owner").populate("like");
-    const loginUser = await User.findById(req.session.user._id);
-    
+    const comments = await Comment.find({game:id}).sort({createdAt:"desc"}).populate("owner");
+
     //login validation
     if(!req.session.user)
-        return res.render("games/games", {pageTitle:"Game", errorMessage:"로그인 먼저 하세요.", game});
+        return res.render("games/games", {pageTitle:"Game", errorMessage:"로그인 먼저 하세요.", game, comments});
+
+    const loginUser = await User.findById(req.session.user._id);  
 
     const newComment = await Comment.create({
         comment, 
         owner: loginUser,
         game:id
     });
-
-    const comments = await Comment.find({game:id}).sort({createdAt:"desc"}).populate("owner");
     
     game.comments.push(newComment);
     game.save();

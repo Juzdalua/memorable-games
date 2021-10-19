@@ -5,7 +5,21 @@ import Dislike from "../model/Dislike";
 import Comment from "../model/Comment";
 
 export const getCommunityList = async (req, res) => {
-    const articles = await Community.find({}).sort({createAt:"desc"}).populate("owner").populate("like").populate("dislike");
+    const {sort, target, search} = req.query;
+    console.log(req.query)
+    
+    let articles;
+    if(target === 'title')
+        articles = await Community.find({title:search}).sort({createAt:"desc"}).populate("owner").populate("like").populate("dislike");
+    else if(target === 'userid'){
+        const user = await User.find({userid:search});
+        articles = await Community.find({owner:user}).sort({createAt:"desc"}).populate("owner").populate("like").populate("dislike");
+    }//if
+    else if(sort === 'new' || sort === undefined)
+        articles = await Community.find({}).sort({createAt:"desc"}).populate("owner").populate("like").populate("dislike");
+    else if(sort === 'hot')
+        articles = await Community.find({}).sort({like:"asc"}).populate("owner").populate("like").populate("dislike");
+    
     
     return res.render("community/community-list", {pageTitle: "Community", articles});
 };
@@ -169,11 +183,13 @@ export const createCommentCommunity = async (req, res) => {
         body:{comment}
     } = req;
     const article = await Community.findById(id).populate("owner").populate("like").populate("dislike");
-    const loginUser = await User.findById(req.session.user._id);
-    
+    const comments = await Comment.find({community:id}).sort({createdAt:"desc"}).populate("owner");
+
     //login validation
     if(!req.session.user)
-        return res.render("community/community", {pageTitle:"Game", errorMessage:"로그인 먼저 하세요.", article});
+        return res.render("community/community", {pageTitle:"Game", errorMessage:"로그인 먼저 하세요.", article, comments});
+
+    const loginUser = await User.findById(req.session.user._id);    
 
     const newComment = await Comment.create({
         comment, 
@@ -181,7 +197,7 @@ export const createCommentCommunity = async (req, res) => {
         community:id
     });
 
-    const comments = await Comment.find({community:id}).sort({createdAt:"desc"}).populate("owner");
+    
     
     article.comments.push(newComment);
     article.save();

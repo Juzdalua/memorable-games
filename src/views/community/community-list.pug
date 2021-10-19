@@ -10,14 +10,14 @@ block content
             a(href="/community/write") 글쓰기
     div.article-list
         div.article-list__header
-            a.article-list__header-new 최신
-            a.article-list__header-hot 인기
+            a.article-list__header-new(href="/community?sort=new") 최신
+            a.article-list__header-hot(href="/community?sort=hot") 인기
             form.article-list__header-search(action="" method="GET") 
-                label(for="comuunity-search")
-                    select(type="select" id="comuunity-search" name="comuunity-search")
-                        option(value="0") 제목
-                        option(value="1") 작성자
-                input(type="text" placeholder="검색")
+                label(for="target")
+                    select(type="select" id="target" name="target")
+                        option(value="title") 제목
+                        option(value="userid") 작성자
+                input(type="text" placeholder="검색" name="search")
                 button
                     span.fas.fa-search       
        
