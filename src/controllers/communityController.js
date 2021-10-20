@@ -6,7 +6,6 @@ import Comment from "../model/Comment";
 
 export const getCommunityList = async (req, res) => {
     const {sort, target, search} = req.query;
-    console.log(req.query)
     
     let articles;
     if(target === 'title')

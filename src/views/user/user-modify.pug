@@ -1,0 +1,18 @@
+extends ../layouts/base.pug
+
+block content 
+    div.main__header
+        span 또 오셨군요?😄      
+        span.main__header-sec ID는 중복 될 수 없습니다. 비밀번호는 최소 8자리를 입력해주세요.
+
+    form.join-form(action="" method="POST")        
+        input(type="email" placeholder="E-mail" name="email" readonly value=`${user.email}` disabled="true")                  
+        input(type="password" placeholder="Password" name="password" required) 
+        input(type="password" placeholder="Cofirm Password" name="password2" required ) 
+        input(type="text" placeholder="ID / Nick name" name="userid" required value=`${user.userid}`)
+        input(type="submit" value="수정하기")
+     
+
+    if errorMessage
+        script.         
+            alert(`#{errorMessage}`)

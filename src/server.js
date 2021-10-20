@@ -3,6 +3,7 @@ import rootRouter from "./routers/rootRouter";
 import noticeRouter from "./routers/noticeRouter";
 import gameRouter from "./routers/gameRouter";
 import communityRouter from "./routers/communityRouter";
+import userRouter from "./routers/userRouter";
 import apiRouter from "./routers/apiRouter";
 import bodyParser from "body-parser";
 import "./db";
@@ -33,6 +34,7 @@ app.use('/', rootRouter);
 app.use('/notice', noticeRouter);
 app.use('/games', gameRouter);
 app.use('/community', communityRouter);
+app.use(`/user`, userRouter);
 app.use('/api', apiRouter);
 
 //404 Uncorrect URL

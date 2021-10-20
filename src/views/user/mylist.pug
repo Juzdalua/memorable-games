@@ -1,0 +1,19 @@
+extends ../layouts/base.pug
+
+block content 
+    div.main__header
+        span 어서오세요, #{user.userid}님.  
+        span.main__header-sec 회원정보를 확인하세요.
+
+    div.main__content
+        div 
+            span E-mail :  
+            span #{user.email}
+        div 
+            span ID : 
+            span=user.userid    
+        button(onClick=`location.href="/user/${user._id}/modify"`) 회원정보 수정하기
+   
+    if errorMessage
+        script.         
+            alert(`#{errorMessage}`)

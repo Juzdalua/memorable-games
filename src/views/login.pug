@@ -3,7 +3,7 @@ extends layouts/base.pug
 block content 
     div.main__header
         span 글을 작성하려면 계정이 필요해요.
-        span 이메일만으로 가입해보세요.
+        span.main__header-sec 이메일만으로 가입해보세요.
 
     if email
         form.login-form(action="" method="POST")  
