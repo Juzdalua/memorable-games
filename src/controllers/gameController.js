@@ -83,12 +83,14 @@ export const getGame = async (req,res) => {
 // Like & Dislike
 export const getGameLike = async (req, res) => {
     const {id} = req.params;
-    const game = await Game.findById(id).populate("owner").populate("like").populate("dislike");
-    const user = await User.findById(req.session.user._id);
+    const game = await Game.findById(id).populate("owner").populate("like").populate("dislike");    
 
+    const comments = await Comment.find({game:id}).sort({createdAt:"desc"}).populate("owner");
     //login validation
     if(!req.session.user)
-        return res.render("games/games", {pageTitle:"Game", errorMessage:"로그인 먼저 하세요.", game});
+        return res.render("games/games", {pageTitle:"Game", errorMessage:"로그인 먼저 하세요.", game, comments});
+
+    const user = await User.findById(req.session.user._id);
 
     // like model 찾기
     const like = await Like.findOne({game: id});
@@ -134,12 +136,14 @@ export const getGameLike = async (req, res) => {
 };
 export const getGameDislike = async (req, res) => {
     const {id} = req.params;
-    const game = await Game.findById(id).populate("owner").populate("like");
-    const user = await User.findById(req.session.user._id);
+    const game = await Game.findById(id).populate("owner").populate("like");    
 
+    const comments = await Comment.find({game:id}).sort({createdAt:"desc"}).populate("owner");
     //login validation
     if(!req.session.user)
-        return res.render("games/games", {pageTitle:"Game", errorMessage:"로그인 먼저 하세요.", game});
+        return res.render("games/games", {pageTitle:"Game", errorMessage:"로그인 먼저 하세요.", game, comments});
+
+    const user = await User.findById(req.session.user._id);
 
     // like model 찾기
     const like = await Like.findOne({game: id});

@@ -74,11 +74,13 @@ export const getCommunity = async(req, res) => {
 export const getArticleLike = async (req, res) => {
     const {id} = req.params;
     const article = await Community.findById(id).populate("owner").populate("like").populate("dislike");
-    const user = await User.findById(req.session.user._id);
-
+    const comments = await Comment.find({community:id}).sort({createdAt:"desc"}).populate("owner");
+    
     //login validation
     if(!req.session.user)
-        return res.render("community/community", {pageTitle:"Community", errorMessage:"로그인 먼저 하세요.", article});
+        return res.render("community/community", {pageTitle:"Community", errorMessage:"로그인 먼저 하세요.", article, comments});
+
+    const user = await User.findById(req.session.user._id);
 
     // like/dislike model 찾기
     const like = await Like.findOne({community: id});
@@ -126,11 +128,13 @@ export const getArticleLike = async (req, res) => {
 export const getArticleDislike = async (req, res) => {
     const {id} = req.params;
     const article = await Community.findById(id).populate("owner").populate("like");
-    const user = await User.findById(req.session.user._id);
-
+    const comments = await Comment.find({community:id}).sort({createdAt:"desc"}).populate("owner");
+    
     //login validation
     if(!req.session.user)
-        return res.render("community/community", {pageTitle:"Community", errorMessage:"로그인 먼저 하세요.", article});
+        return res.render("community/community", {pageTitle:"Community", errorMessage:"로그인 먼저 하세요.", article, comments});
+
+    const user = await User.findById(req.session.user._id);
 
     // like/dislike model 찾기
     const like = await Like.findOne({community: id});

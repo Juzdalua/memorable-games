@@ -23,3 +23,19 @@ export const imageUpload = multer({
         fileSize:10000000,
     }
 });
+
+//로그인이 안되어있다면
+export const protectLogin = (req, res, next) => {
+    if(!req.session.loggedIn)
+        return res.status(404).render("404", {pageTitle:"404"});
+    else
+        return next();    
+};
+
+//로그인이 되어있다면
+export const publicLogin = (req, res, next) => {
+    if(req.session.loggedIn)
+        return res.status(404).render("404", {pageTitle:"404"});
+    else
+        return next();    
+};
