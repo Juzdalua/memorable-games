@@ -1,4 +1,6 @@
 import User from "../model/User";
+import bcrypt from "bcrypt";
+const SALT_ROUND = 5;
 
 // Join
 export const getJoin = (req, res) =>{
@@ -24,8 +26,11 @@ export const postJoin = async (req, res) => {
     if(existUserid)    
         return res.status(400).render("join", {pageTitle:" | Join", errorMessage : "ID가 이미 존재합니다."});
    
+    //hash password    
+    const hashPassword = bcrypt.hashSync(password, SALT_ROUND);    
+    
     await User.create({
-        userid, password, password2, email
+        userid, password: hashPassword, email
     });
 
     return res.redirect("login");
@@ -38,12 +43,14 @@ export const getLogin = (req, res) => {
 
 export const postLogin = async (req, res) => {
     const {email, password} = req.body;
+
+    const passwordOk = bcrypt.compareSync(password, bcrypt.hashSync(password, SALT_ROUND));
     
     const loginUser = await User.findOne({email});   
     // email, password validation 
     if(!loginUser)
         res.status(400).render("login", {pageTitle:" | Login,", errorMessage : "E-mail does not exist."});
-    if(password !== loginUser.password)
+    if(!passwordOk)
         res.status(400).render("login", {pageTitle:" | Login,", errorMessage : "Uncorrect Password", email});
 
     //session에 유저 저장하기
@@ -90,10 +97,13 @@ export const postUserModify = async (req, res) => {
 
     //userid validation    
     const existUserid =  await User.findOne({userid});
-    if(existUserid)    
+    if(user.userid !== userid && existUserid)    
         return res.status(400).render("user/user-modify", {pageTitle:" | User", errorMessage : "ID가 이미 존재합니다.", user});
    
-    user.password = password;
+    //hash password    
+    const hashPassword = bcrypt.hashSync(password, SALT_ROUND);    
+    
+    user.password = hashPassword;
     user.userid = userid;
     user.save();
     
