@@ -4,8 +4,9 @@ import Like from "../model/Like";
 import Dislike from "../model/Dislike";
 import Comment from "../model/Comment";
 
+//커뮤니티 리스트
 export const getCommunityList = async (req, res) => {
-    const {sort, target, search} = req.query;
+    const {sort, target, search, page} = req.query;
     
     let articles;
     if(target === 'title')
@@ -19,8 +20,26 @@ export const getCommunityList = async (req, res) => {
     else if(sort === 'hot')
         articles = await Community.find({}).sort({like:"asc"}).populate("owner").populate("like").populate("dislike");
     
+    //page
+    let totalPage = 1;
     
-    return res.render("community/community-list", {pageTitle: "Community", articles});
+    let itemInPage = 5;
+    if(articles)
+        totalPage = Math.ceil(articles.length/itemInPage);
+    
+    let nowPage = 1;
+    if(page)
+        nowPage = page;
+
+    if(Number(nowPage) === 1){        
+        articles = articles.filter( (x, idx) => {return idx<itemInPage})
+    } else{
+        articles = articles.filter( (x, idx) => {return idx>= (Number(page)-1)*itemInPage && idx < itemInPage*Number(page)})
+    }
+    
+
+    
+    return res.render("community/community-list", {pageTitle: "Community", articles, totalPage});
 };
 
 //게시물 작성

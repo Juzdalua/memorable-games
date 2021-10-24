@@ -27,3 +27,7 @@ block content
                 +article(article)
             else
                 span 작성된 글이 없습니다.
+
+        div.article-list__main-page
+            -for(i=1;i<= totalPage ;i++)
+                a(href=`/community?page=${i}`) [#{i}] 
