@@ -22,6 +22,12 @@ a{
 a:visited{
     color: black;
 }
+a:active{
+    color:rgba(0, 0, 0, 0.7);
+}
+a:hover{    
+    color:gray;
+}
 
 .nav-topbar {
     top:0;    
@@ -495,6 +501,12 @@ main{
 .article__main-content__img{
     margin-top: 100px;
     margin-bottom: -100px;
+}
+
+.article-list__main-page{
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
 }
 
 /* home */

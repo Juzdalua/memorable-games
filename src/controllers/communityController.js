@@ -3,6 +3,7 @@ import User from "../model/User";
 import Like from "../model/Like";
 import Dislike from "../model/Dislike";
 import Comment from "../model/Comment";
+import { dividePage } from "./functions";
 
 //커뮤니티 리스트
 export const getCommunityList = async (req, res) => {
@@ -20,24 +21,9 @@ export const getCommunityList = async (req, res) => {
     else if(sort === 'hot')
         articles = await Community.find({}).sort({like:"asc"}).populate("owner").populate("like").populate("dislike");
     
-    //page
-    let totalPage = 1;
-    
-    let itemInPage = 5;
-    if(articles)
-        totalPage = Math.ceil(articles.length/itemInPage);
-    
-    let nowPage = 1;
-    if(page)
-        nowPage = page;
-
-    if(Number(nowPage) === 1){        
-        articles = articles.filter( (x, idx) => {return idx<itemInPage})
-    } else{
-        articles = articles.filter( (x, idx) => {return idx>= (Number(page)-1)*itemInPage && idx < itemInPage*Number(page)})
-    }
-    
-
+    const pageFunction = dividePage(articles, 5, page);
+    articles = pageFunction.item;
+    let totalPage = pageFunction.totalPage
     
     return res.render("community/community-list", {pageTitle: "Community", articles, totalPage});
 };
