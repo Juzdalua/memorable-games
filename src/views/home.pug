@@ -1,4 +1,10 @@
-include layouts/base.pug
+extends layouts/base.pug
 
 block content 
-    
+    div.main__header.main__header-home
+        span 나만의 게임들을🎮
+        span 나누는 공간
+
+        if !loggedIn
+            button.main__header-join(onClick=`location.href="/join"`) 회원가입
+            button.main__header-login(onClick=`location.href="/login"`) 로그인
