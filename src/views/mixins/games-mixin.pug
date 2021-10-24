@@ -10,4 +10,4 @@ mixin game(game)
         div.steam-item__content 
             span.steam-item__content-title=game.title 
             span.steam-item__content-owner=game.owner.userid 
-            span.steam-item__content-metas  #{game.views}회 | #{String(game.createAt).substr(4,20)}
+            span.steam-item__content-metas  #{game.views}회 | #{game.createAt.toISOString().substr(0,10)}

@@ -4,6 +4,7 @@ mixin notice(notice)
         span.notice-list__header-num=notice.idx
         a.notice-list__header-title(href=`/notice/${notice._id}`)=notice.title 
         a.notice-list__header-owner(href="#")=notice.owner.userid
-        span.notice-list__header-createAt=String(notice.createAt).substr(4,20) 
+        span.notice-list__header-createAt
+            = notice.createAt.toISOString().substr(0,10)
         span.notice-list__header-views=notice.views 
         

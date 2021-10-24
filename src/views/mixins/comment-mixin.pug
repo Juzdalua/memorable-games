@@ -2,7 +2,8 @@ mixin comment(comment)
 
     div.steam__main-comment__item-mixin
         span.steam__main-comment__item-userid=comment.owner.userid
-        span.steam__main-comment__item-createAt=String(comment.createAt).substr(4,20)
+        span.steam__main-comment__item-createAt
+            =comment.createAt.toISOString().substr(0,10)+" "+String(comment.createAt.getHours()).padStart(2, '0')+":"+String(comment.createAt.getMinutes()).padStart(2, '0')+":"+String(comment.createAt.getSeconds()).padStart(2, '0')
         if String(comment.owner._id) === String(locals.loggedInUser._id)
             if pageTitle === "Game"
                 form(action=`/api/games/${comment._id}/comment/delete` method="POST") 

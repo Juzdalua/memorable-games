@@ -16,9 +16,7 @@ export const postWrite = async (req, res) => {
   const {title, description} = req.body;
   const user = await User.findById(req.session.user._id);    
   
-  //글번호 만들기
-  
- 
+  //글번호 만들기 
   let index = await NoticeCounter.findOne({name:"notice"});
 
   if(!index)

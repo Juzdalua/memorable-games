@@ -7,7 +7,7 @@ const NoticeSchema = new Schema({
     description: {type:String, required:true},
     createAt:{type:Date, default:Date.now},
     views: {type:Number, default:0}, 
-    owner: {type:mongoose.Schema.Types.ObjectId, required:true, ref:"User"}
+    owner: {type:mongoose.Schema.Types.ObjectId, required:true, ref:"User"},
 });
 
 

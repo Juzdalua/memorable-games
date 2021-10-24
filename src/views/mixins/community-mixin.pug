@@ -8,7 +8,7 @@ mixin article(article)
             div.article-box__item-title
                 span #{article.title} [#{article.comments.length}]
             div 
-                span #{article.views}회 | #{String(article.createAt).substr(4,20)} | #{article.owner.userid}
+                span #{article.views}회 | #{article.createAt.toISOString().substr(0,10)} | #{article.owner.userid}
         div.article-box__img
             if article.fileUrl
                 img(src=`/${article.fileUrl}`, alt="" width="200px" height="100px")

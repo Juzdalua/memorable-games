@@ -5,7 +5,8 @@ block content
     div.notice__main 
         div.notice__main-header
             span=game.owner.userid 
-            span=String(game.createAt).substr(4,20)
+            span
+                =game.createAt.toISOString().substr(0,10)+" "+String(game.createAt.getHours()).padStart(2, '0')+":"+String(game.createAt.getMinutes()).padStart(2, '0')+":"+String(game.createAt.getSeconds()).padStart(2, '0')
             span 조회: #{game.views}
         div.notice__main-header__menu
             div
