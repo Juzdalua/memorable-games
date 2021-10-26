@@ -49,7 +49,7 @@ export const postLogin = async (req, res) => {
     if(!loginUser)
         return res.status(400).render("login", {pageTitle:" | Login,", errorMessage : "E-mail does not exist."});
 
-    const passwordOk = await bcrypt.compareSync(password, bcrypt.hashSync(loginUser.password, SALT_ROUND));
+    const passwordOk = await bcrypt.compareSync(password, loginUser.password);
         
     // password validation
     if(!passwordOk)
