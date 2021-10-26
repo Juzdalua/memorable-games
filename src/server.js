@@ -1,4 +1,5 @@
 import "regenerator-runtime";
+import "dotenv/config";
 import express from "express";
 import rootRouter from "./routers/rootRouter";
 import noticeRouter from "./routers/noticeRouter";
@@ -12,7 +13,7 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import {localsMiddlewares} from "./middlewares";
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 const app = express();
 
 
@@ -21,11 +22,11 @@ app.set("views", process.cwd()+"/src/views");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
-    secret: 'booyah',
+    secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false },
-    store: MongoStore.create(process.env.DB_URL)
+    store: MongoStore.create({mongoUrl: process.env.DB_URL})
   }));
 
 
