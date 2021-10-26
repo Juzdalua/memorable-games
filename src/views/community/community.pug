@@ -18,7 +18,10 @@ block content
                 span | 댓글(#{article.comments.length})
         div.notice__main-content
             span.notice__main-content__title=article.title             
-            img.article__main-content__img(src=`${article.fileUrl}` alt="")
+            if isHeroku
+                img.article__main-content__img(src=`${article.fileUrl}` alt="")
+            else 
+                img.article__main-content__img(src=`/${article.fileUrl}` alt="")
             span.notice__main-content__main(style="white-space:pre;")=article.description
             div.steam__main-rating
                 div.steam__main-rating__like

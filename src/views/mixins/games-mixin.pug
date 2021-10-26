@@ -4,9 +4,9 @@ mixin game(game)
         div.steam-item__thumbnail 
             if game.thumbnailUrl
                 div
-                    img(src=`${game.thumbnailUrl}` width="250px" height="150px")
+                    img(src=`/${game.thumbnailUrl}` width="250px" height="150px")
             else 
-                div 300x200
+                div 등록된 이미지가 없습니다.
         div.steam-item__content 
             span.steam-item__content-title=game.title 
             span.steam-item__content-owner=game.owner.userid 

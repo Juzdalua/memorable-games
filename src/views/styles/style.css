@@ -287,7 +287,11 @@ main{
 .steam-item__thumbnail {
     width: 250px;
     height: 150px;
-    background-color: tomato;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .steam-item__content {
     display: flex;

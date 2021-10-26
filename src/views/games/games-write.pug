@@ -27,6 +27,8 @@ block content
                     input(type="text" placeholder="제목을 입력하세요" required name="title")
         div.steam-form__main    
             label(for="video") 비디오를 선택하세요
-                input(type="file" accept="video/*" required name="video" id="video")        
+                input(type="file" accept="video/*"  name="video" id="video")    
+            label(for="image") 이미지를 선택하세요
+                input(type="file" accept="image/*"  name="image" id="image")      
             textarea(name="description", cols="100", rows="20" required) 
         input(type="submit" value="작성완료")

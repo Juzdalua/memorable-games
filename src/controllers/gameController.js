@@ -19,13 +19,14 @@ export const getGameWrite = (req, res) => {
 };
 export const postGameWrite = async (req, res) => {
     const {title, description,age, genre} = req.body;
-    
+     
     const isHeroku = process.env.NODE_ENV === "production";
 
     const game = await Game.create({
         title, description,age, genre,
         owner: req.session.user._id,
-        fileUrl: isHeroku ? req.file.location : req.file.path,        
+        fileUrl: req.files.video ? (isHeroku ? req.files.video[0].location : req.files.video[0].path) : null,
+        thumbnailUrl: req.files.image ? (isHeroku ? req.files.image[0].location : req.files.image[0].path) : null,
     });    
     const user = await User.findById(req.session.user._id);
     user.game.push(game._id);
@@ -42,28 +43,7 @@ export const postGameWrite = async (req, res) => {
      game.dislike = dislike._id;
     game.save();
 
-    let thumbnailUrl = "";
-    ffmpeg(isHeroku ? req.file.location : req.file.path)
-    .on('filenames', function(filenames) {
-        // console.log('Will generate ' + filenames.join(', '));        
-        // thumbnailUrl = isHeroku ? `https://memorable-games.s3.ap-northeast-2.amazonaws.com/videos/thumbnails/${filenames[0]}` : `uploads/videos/thumbnails/${filenames[0]}`  
-        thumbnailUrl = `uploads/videos/thumbnails/${filenames[0]}`              
-    })
-    .on('end', function() {
-        //console.log('Screenshots taken');
-        game.thumbnailUrl = thumbnailUrl;
-        game.save();
-    }).on("error", function(error){
-        console.log(error);
-        return res.status(404).render("404");
-    })
-    .screenshots({
-        count:1,
-        filename: "thumbnail-%b.png",
-        // folder: isHeroku ? `https://memorable-games.s3.ap-northeast-2.amazonaws.com/videos/thumbnails` : `uploads/videos/thumbnails`,
-        folder: `uploads/videos/thumbnails`,
-        size: "250x150",             
-    });    
+  
     const comments="";
     //return res.redirect("/games");
     return res.render("games/games", {pageTitle:"Game", game, comments});

@@ -9,7 +9,7 @@ const GameSchema = new Schema({
     age:{type:Number, required:true},   // 0-전체이용가, 1-12세이용가, 2-15세이용가, 3-청소년이용불가, 4-시험용, 5-등급면제
     views: {type:Number, default:0}, 
     rating: {type:Number, default:0},
-    fileUrl: {type:String, required:true},
+    fileUrl: {type:String},
     thumbnailUrl: {type:String},
     owner: {type:mongoose.Schema.Types.ObjectId, required:true, ref:"User"},
     comments: [{type:mongoose.Schema.Types.ObjectId, ref:"Comment"}],

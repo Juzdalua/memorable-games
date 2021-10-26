@@ -11,4 +11,7 @@ mixin article(article)
                 span #{article.views}회 | #{article.createAt.toISOString().substr(0,10)} | #{article.owner.userid}
         div.article-box__img
             if article.fileUrl
-                img(src=`${article.fileUrl}`, alt="" width="200px" height="100px")
+                if isHeroku
+                    img(src=`${article.fileUrl}`, alt="" width="200px" height="100px")
+                else 
+                    img(src=`/${article.fileUrl}`, alt="" width="200px" height="100px")
