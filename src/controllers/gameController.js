@@ -40,9 +40,8 @@ export const postGameWrite = async (req, res) => {
     const dislike = await Dislike.create({
         game: game._id 
      });
-     game.dislike = dislike._id;
+    game.dislike = dislike._id;
     game.save();
-
   
     const comments="";
     //return res.redirect("/games");

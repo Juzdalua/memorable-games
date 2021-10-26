@@ -353,8 +353,7 @@ main{
     font-size: 50px;      
 }
 
-.steam__main-content__video{
-    
+.steam__main-content__video{    
     margin-top: 100px;
     margin-bottom: -100px;
 }
@@ -505,7 +504,9 @@ main{
 }
 .article__main-content__img{
     margin-top: 100px;
-    margin-bottom: -100px;
+    
+    width: 50%;
+    height: 50%;
 }
 
 .article-list__main-page{

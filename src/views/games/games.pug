@@ -51,11 +51,16 @@ block content
                 span | 댓글(#{game.comments.length})
         div.notice__main-content
             span.notice__main-content__title=game.title    
+            if game.thumbnailUrl 
+                if isHeroku
+                    img.article__main-content__img(src=`${game.thumbnailUrl}` alt="")
+                else 
+                    img.article__main-content__img(src=`/${game.thumbnailUrl}` alt="")
             if game.fileUrl
                 if !isHeroku
                     video.steam__main-content__video(controls src=`/${game.fileUrl}`)
                 else 
-                    video.steam__main-content__video(controls src=`${game.fileUrl}`)
+                    video.steam__main-content__video(controls src=`${game.fileUrl}`)            
             span.notice__main-content__main(style="white-space:pre;")=game.description
             div.steam__main-rating
                 div.steam__main-rating__like
