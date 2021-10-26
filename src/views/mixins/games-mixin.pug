@@ -4,7 +4,7 @@ mixin game(game)
         div.steam-item__thumbnail 
             if game.thumbnailUrl
                 div
-                    img(src=`/${game.thumbnailUrl}` width="250px" height="150px")
+                    img(src=`${game.thumbnailUrl}` width="250px" height="150px")
             else 
                 div 300x200
         div.steam-item__content 

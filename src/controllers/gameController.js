@@ -19,11 +19,13 @@ export const getGameWrite = (req, res) => {
 };
 export const postGameWrite = async (req, res) => {
     const {title, description,age, genre} = req.body;
-               
+    
+    const isHeroku = process.env.NODE_ENV === "production";
+
     const game = await Game.create({
         title, description,age, genre,
         owner: req.session.user._id,
-        fileUrl: req.file.location,        
+        fileUrl: isHeroku ? req.file.location : req.file.path,        
     });    
     const user = await User.findById(req.session.user._id);
     user.game.push(game._id);
@@ -45,7 +47,7 @@ export const postGameWrite = async (req, res) => {
     ffmpeg(req.file.location)
     .on('filenames', function(filenames) {
         // console.log('Will generate ' + filenames.join(', '));        
-        thumbnailUrl = `uploads/thumbnails/${filenames[0]}`        
+        thumbnailUrl = isHeroku ? `https://memorable-games.s3.ap-northeast-2.amazonaws.com/videos/thumbnails/${filenames[0]}` : `uploads/videos/thumbnails/${filenames[0]}`        
     })
     .on('end', function() {
         //console.log('Screenshots taken');
@@ -58,7 +60,7 @@ export const postGameWrite = async (req, res) => {
     .screenshots({
         count:1,
         filename: "thumbnail-%b.png",
-        folder: `uploads/thumbnails`,
+        folder: isHeroku ? `https://memorable-games.s3.ap-northeast-2.amazonaws.com/videos/thumbnails` : `uploads/videos/thumbnails`,
         size: "250x150",             
     });    
     const comments="";

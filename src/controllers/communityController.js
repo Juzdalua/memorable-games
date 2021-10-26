@@ -36,12 +36,14 @@ export const postCommunityWrite = async(req, res) => {
     const {title, description} = req.body;
     const loginUser = await User.findById(req.session.user._id);
     
+    const isHeroku = process.env.NODE_ENV === "production";
+
     const article = await Community.create({
         title, description,                 
         owner: loginUser._id
     })
     if(req.file){
-        article.fileUrl = req.file.location;        
+        article.fileUrl = isHeroku ? req.file.location : req.file.path;        
     }//if
     //local: file.path => server: file.location
 
