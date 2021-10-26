@@ -44,10 +44,12 @@ export const postGameWrite = async (req, res) => {
 
     //thumbnail 만들기
     let thumbnailUrl = "";
-    ffmpeg(req.file.location)
+    ffmpeg(isHeroku ? req.file.location : req.file.path)
     .on('filenames', function(filenames) {
         // console.log('Will generate ' + filenames.join(', '));        
-        thumbnailUrl = isHeroku ? `https://memorable-games.s3.ap-northeast-2.amazonaws.com/videos/thumbnails/${filenames[0]}` : `uploads/videos/thumbnails/${filenames[0]}`        
+        thumbnailUrl = isHeroku ? `https://memorable-games.s3.ap-northeast-2.amazonaws.com/videos/thumbnails/${filenames[0]}` : `uploads/videos/thumbnails/${filenames[0]}`  
+        // thumbnailUrl = `uploads/videos/thumbnails/${filenames[0]}`      
+        console.log("1")  
     })
     .on('end', function() {
         //console.log('Screenshots taken');
@@ -61,6 +63,7 @@ export const postGameWrite = async (req, res) => {
         count:1,
         filename: "thumbnail-%b.png",
         folder: isHeroku ? `https://memorable-games.s3.ap-northeast-2.amazonaws.com/videos/thumbnails` : `uploads/videos/thumbnails`,
+        // folder: `uploads/videos/thumbnails`,
         size: "250x150",             
     });    
     const comments="";
