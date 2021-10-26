@@ -41,8 +41,9 @@ export const postCommunityWrite = async(req, res) => {
         owner: loginUser._id
     })
     if(req.file){
-        article.fileUrl = req.file.path;        
+        article.fileUrl = req.file.location;        
     }//if
+    //local: file.path => server: file.location
 
     loginUser.community.push(article._id);
     loginUser.save();

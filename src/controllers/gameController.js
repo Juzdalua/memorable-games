@@ -23,7 +23,7 @@ export const postGameWrite = async (req, res) => {
     const game = await Game.create({
         title, description,age, genre,
         owner: req.session.user._id,
-        fileUrl: req.file.path,        
+        fileUrl: req.file.location,        
     });    
     const user = await User.findById(req.session.user._id);
     user.game.push(game._id);
@@ -42,7 +42,7 @@ export const postGameWrite = async (req, res) => {
 
     //thumbnail 만들기
     let thumbnailUrl = "";
-    ffmpeg(req.file.path)
+    ffmpeg(req.file.location)
     .on('filenames', function(filenames) {
         // console.log('Will generate ' + filenames.join(', '));        
         thumbnailUrl = `uploads/thumbnails/${filenames[0]}`        
