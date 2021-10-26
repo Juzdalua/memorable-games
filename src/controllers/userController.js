@@ -43,15 +43,17 @@ export const getLogin = (req, res) => {
 
 export const postLogin = async (req, res) => {
     const {email, password} = req.body;
+    const loginUser = await User.findOne({email});  
 
-    const passwordOk = bcrypt.compareSync(password, bcrypt.hashSync(password, SALT_ROUND));
-    
-    const loginUser = await User.findOne({email});   
-    // email, password validation 
+    // email validation 
     if(!loginUser)
-        res.status(400).render("login", {pageTitle:" | Login,", errorMessage : "E-mail does not exist."});
+        return res.status(400).render("login", {pageTitle:" | Login,", errorMessage : "E-mail does not exist."});
+
+    const passwordOk = await bcrypt.compareSync(password, bcrypt.hashSync(loginUser.password, SALT_ROUND));
+        
+    // password validation
     if(!passwordOk)
-        res.status(400).render("login", {pageTitle:" | Login,", errorMessage : "Uncorrect Password", email});
+        return res.status(400).render("login", {pageTitle:" | Login,", errorMessage : "Uncorrect Password", email});
 
     //session에 유저 저장하기
     req.session.loggedIn = true;

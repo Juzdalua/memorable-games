@@ -52,7 +52,7 @@ block content
         div.notice__main-content
             span.notice__main-content__title=game.title             
             video.steam__main-content__video(controls src=`/${game.fileUrl}`)
-            span.notice__main-content__main=game.description
+            span.notice__main-content__main(style="white-space:pre;")=game.description
             div.steam__main-rating
                 div.steam__main-rating__like
                     span.steam__main-rating-like(OnClick=`location.href="/games/${game._id}/like"`) 👍

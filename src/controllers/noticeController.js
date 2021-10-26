@@ -14,6 +14,7 @@ export const getWrite =  (req, res) => {
 
 export const postWrite = async (req, res) => {
   const {title, description} = req.body;
+  
   const user = await User.findById(req.session.user._id);    
   
   //글번호 만들기 
@@ -40,6 +41,7 @@ export const postWrite = async (req, res) => {
   res.render("notice/notice", {pageTitle: " | Notice", notice});
 };
 
+//공지사항 보기
 export const getNotice = async (req, res) => {
     const {id} = req.params;
     const notice = await Notice.findById(id).populate("owner");

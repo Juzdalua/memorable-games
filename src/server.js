@@ -1,3 +1,4 @@
+import "regenerator-runtime";
 import express from "express";
 import rootRouter from "./routers/rootRouter";
 import noticeRouter from "./routers/noticeRouter";
@@ -24,7 +25,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false },
-    store: MongoStore.create({ mongoUrl: 'mongodb://127.0.0.1:27017/memorable-games' })
+    store: MongoStore.create(process.env.DB_URL)
   }));
 
 
