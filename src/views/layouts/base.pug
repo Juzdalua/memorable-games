@@ -26,11 +26,17 @@ html(lang="en")
         nav.nav-sidebar
             ul.nav-sidebar__main 
                 li 
-                    a(href="/notice") 공지사항
+                    a(href="/notice") 
+                        span.nav-sidebar__main-notice__title  공지사항
+                        span.nav-sidebar__main-notice__icon 🔖
                 li 
-                    a(href="/games") 게임
+                    a(href="/games") 
+                        span.nav-sidebar__main-game__title 게임
+                        span.nav-sidebar__main-game__icon 🎲
                 li 
-                    a(href="/community") 커뮤니티
+                    a(href="/community") 
+                        span.nav-sidebar__main-community__title 커뮤니티
+                        span.nav-sidebar__main-community__icon 🧑‍🤝‍🧑
         
         main
             block content     

@@ -67,9 +67,9 @@ a:hover{
 
 /* main */
 main{    
-    width: 70%;
+    width: 70%;    
     margin-left: 25%;
-    margin-top: 10%;    
+    margin-top: 200px;    
     padding: 10px;    
     display: flex;
     flex-direction: column;
@@ -79,7 +79,7 @@ main{
     min-height: 50vh;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-    margin-bottom: 150px;
+    margin-bottom: 150px;    
 }
 
 .main__header{
@@ -279,6 +279,8 @@ main{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     margin-top: 30px;
+    width:100%;
+    padding: 10px;
 }
 .steam-item{
     margin:50px;
@@ -553,4 +555,47 @@ main{
     align-items: center;
     width: 100%;
     min-height: 100px;    
+}
+
+/* 반응형 웹 */
+.nav-sidebar__main-notice__icon,
+.nav-sidebar__main-game__icon,
+.nav-sidebar__main-community__icon{
+    font-size: 0px;
+}
+@media screen and (max-width:1250px) {
+    .nav-sidebar{
+        font-size: 40px;  
+        width: 20%;   
+    }
+}
+
+@media screen and (max-width:900px) {
+    .nav-sidebar__main-notice__title,
+    .nav-sidebar__main-game__title,
+    .nav-sidebar__main-community__title{
+        font-size: 0px;
+    }
+    .nav-sidebar__main-notice__icon,
+    .nav-sidebar__main-game__icon,
+    .nav-sidebar__main-community__icon{
+    font-size: 40px;
+    }
+    .nav-sidebar{        
+        width: 10%;   
+    }
+}
+
+@media screen and (max-width:630px) {
+    .main__header-home__first,
+    .main__header-home__second{
+        font-size: 40px;
+    }
+}
+
+@media screen and (max-width:400px) {
+    .main__header-home__first,
+    .main__header-home__second{
+        font-size: 30px;
+    }
 }
